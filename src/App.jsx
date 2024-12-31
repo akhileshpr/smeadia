@@ -5,6 +5,7 @@ import Register from "src/components/register/register";
 import Navbar from "./components/navbar";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { themeSettings } from "./theme";
+import Login from "./components/login/login";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -12,7 +13,8 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Navbar />
+        <Login/>
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/register" element={<Register />} />
         </Routes>
