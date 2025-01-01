@@ -131,8 +131,10 @@ const Navbar = () => {
           minWidth="300px"
           backgroundColor={background}
           sx={{
-            transform: isMobileMenuToggled ? "translateX(0)" : "translateX(100%)",
-            transition: "transform 0.5s ease-in-out", 
+            transform: isMobileMenuToggled
+              ? "translateX(0)"
+              : "translateX(100%)",
+            transition: "transform 0.5s ease-in-out",
           }}
         >
           {/* CLOSE ICON */}
@@ -162,9 +164,15 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
+            <IconButton>
+              <Message sx={{ fontSize: "25px" }} />
+            </IconButton>
+            <IconButton>
+              <Notifications sx={{ fontSize: "25px" }} />
+            </IconButton>
+            <IconButton>
+              <Help sx={{ fontSize: "25px" }} />
+            </IconButton>
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}

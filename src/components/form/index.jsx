@@ -1,3 +1,4 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -5,11 +6,12 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import * as yup from "yup";
-
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -40,11 +42,11 @@ const Form = () => {
   const { palette } = useTheme();
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
-
-  const handleFormSubmit = (values) => {
-    console.log(values);
-    
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
+  const handleFormSubmit = (values) => {};
   return (
     <>
       <Formik
@@ -113,13 +115,28 @@ const Form = () => {
               />
               <TextField
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password}
                 name="password"
                 error={Boolean(touched.password) && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={togglePasswordVisibility}
+                        onMouseDown={(e) => e.preventDefault()} 
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Box>
             {/* BUTTONS */}

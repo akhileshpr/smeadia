@@ -9,7 +9,7 @@ const LoginPage = () => {
     <Box>
       {/* Header Section */}
       <Box
-        backgroundColor={theme.palette.background.dark}
+        backgroundColor={theme.palette.background.alt}
         p="1rem 6%"
         textAlign="center"
       >
