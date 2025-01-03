@@ -13,10 +13,10 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Login/>
+        {/* <Login/> */}
         {/* <Navbar /> */}
         <Routes>
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Login />} />
         </Routes>
       </ThemeProvider>
     </>

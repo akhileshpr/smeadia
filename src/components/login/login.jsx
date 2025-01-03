@@ -25,7 +25,7 @@ const LoginPage = () => {
             justifyContent="center"
             alignItems="center"
             flexDirection="column"
-            mt="2rem"
+            mt="0.45rem"
             p="2rem"
             // width={isNonMobileScreens ? "40%" : "90%"}
             maxWidth="500px"

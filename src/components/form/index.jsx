@@ -1,4 +1,5 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -12,6 +13,7 @@ import {
 import { Formik } from "formik";
 import React, { useState } from "react";
 import * as yup from "yup";
+import { loginApi, registerAPI } from "../../services/allApi";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -43,16 +45,55 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
   const [showPassword, setShowPassword] = useState(false);
+  const [loading,setLoading] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-  const handleFormSubmit = (values) => {};
+
+  const register = async (values, onSubmitProps) => {
+    try {
+         setLoading(true);
+      const reqData = new FormData();
+      Object.entries(values).forEach(([k, v]) => reqData.append(k, v));
+      const result = await registerAPI(reqData);
+      if(result.status === 200){
+        setLoading(false)
+        onSubmitProps.resetForm();
+        setPageType("login");
+      }
+      console.log(result);
+    } catch (err) {
+      setLoading(false)
+    }
+  };
+  const login = async (values, onSubmitProps) => {
+    try {
+      setLoading(true);
+      const reqData = new FormData();
+      Object.entries(values).forEach(([k, v]) => reqData.append(k, v));
+      const result = await loginApi(reqData);
+      if(result.status === 200){
+        setLoading(false)
+        onSubmitProps.resetForm();
+        setPageType("login");
+      }
+      console.log(result);
+    } catch (err) {
+      setLoading(false)
+    }finally{
+      setLoading(false)
+    }
+  };
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    if (isLogin) await login(values, onSubmitProps);
+    if (isRegister) await register(values, onSubmitProps);
+  };
   return (
     <>
       <Formik
         onSubmit={handleFormSubmit}
-        initialValues={initialValueRegister}
-        validationSchema={registerSchema}
+        initialValues={isLogin ? initialValueLogin : initialValueRegister}
+        validationSchema={isLogin ? loginSchema : registerSchema}
       >
         {({
           values,
@@ -82,7 +123,7 @@ const Form = () => {
                     label="First Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.firstName}
+                    value={values.firstName || ""}
                     name="firstName"
                     error={
                       Boolean(touched.firstName) && Boolean(errors.firstName)
@@ -94,7 +135,7 @@ const Form = () => {
                     label="Last Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.lastName}
+                    value={values.lastName || ""}
                     name="lastName"
                     error={
                       Boolean(touched.lastName) && Boolean(errors.lastName)
@@ -123,13 +164,12 @@ const Form = () => {
                 error={Boolean(touched.password) && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
                 fullWidth
-                margin="normal"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         onClick={togglePasswordVisibility}
-                        onMouseDown={(e) => e.preventDefault()} 
+                        onMouseDown={(e) => e.preventDefault()}
                         edge="end"
                       >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -141,9 +181,10 @@ const Form = () => {
             </Box>
             {/* BUTTONS */}
             <Box>
-              <Button
+              <LoadingButton
                 fullWidth
                 type="submit"
+                loading={loading}
                 sx={{
                   m: "2rem 0",
                   p: "1rem",
@@ -152,11 +193,15 @@ const Form = () => {
                 }}
               >
                 {isLogin ? "LOGIN" : "REGISTER"}
-              </Button>
+              </LoadingButton>
               <Typography
                 onClick={() => {
                   setPageType(isLogin ? "register" : "login");
-                  resetForm();
+                  resetForm({
+                    values: isRegister
+                      ? initialValueRegister
+                      : initialValueLogin,
+                  });
                 }}
                 sx={{
                   textDecoration: "underline",
