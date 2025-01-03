@@ -16,7 +16,7 @@ function App() {
         {/* <Login/> */}
         {/* <Navbar /> */}
         <Routes>
-          <Route path="/register" element={<Login />} />
+          <Route path="/" element={<Login />} />
         </Routes>
       </ThemeProvider>
     </>
