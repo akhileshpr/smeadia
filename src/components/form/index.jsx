@@ -14,6 +14,8 @@ import { Formik } from "formik";
 import React, { useState } from "react";
 import * as yup from "yup";
 import { loginApi, registerAPI } from "../../services/allApi";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../redux";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -46,6 +48,8 @@ const Form = () => {
   const isRegister = pageType === "register";
   const [showPassword, setShowPassword] = useState(false);
   const [loading,setLoading] = useState(false);
+  const dispatch = useDispatch();
+
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -76,6 +80,12 @@ const Form = () => {
         setLoading(false)
         onSubmitProps.resetForm();
         setPageType("login");
+        dispatch(
+          setLogin({
+            user: result?.data?.user,
+            token:result?.data?.token,
+          })
+        );
       }
       console.log(result);
     } catch (err) {
