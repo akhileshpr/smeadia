@@ -9,6 +9,7 @@ import Login from "./components/login/login";
 import UserWidget from "./components/widgets/userWidget";
 import HomePage from "./pages/Homepage/home";
 import MyPostWidget from "./components/widgets/myPostWidget";
+import Profile from "./components/profile/profile";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -23,7 +24,8 @@ function App() {
           {/* <Route path="/home" element={isAuth?<HomePage/> :<Login/>}/> */}
         </Routes>
           <HomePage/>
-
+          {/* <Profile/> */}
+          
       </ThemeProvider>
     </>
   );

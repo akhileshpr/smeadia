@@ -7,8 +7,8 @@ const ProfileImage = ({ image, size = "60px" }) => {
     <>
       <Box width={size} height={size}>
         <img
-        //   src={`${SERVER_URL}/uploads/${image}`}
-        src={image1}
+         src={image ? `${SERVER_URL}/uploads/${image}` : image1}
+// src={image1}
           alt="user"
           width={size}
           height={size}

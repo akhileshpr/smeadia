@@ -7,3 +7,6 @@ export const registerAPI=async(user)=>{
 export const loginApi=async(user)=>{
     return await commonAPI("POST",`${SERVER_URL}/login`,user,"")
 }
+export const postDataApi=async(post,reqHeader)=>{
+    return await commonAPI("POST",`${SERVER_URL}/post`,post,reqHeader);
+}
