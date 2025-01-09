@@ -21,11 +21,9 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Login />} />
-          {/* <Route path="/home" element={isAuth?<HomePage/> :<Login/>}/> */}
-        </Routes>
-          <HomePage/>
-          {/* <Profile/> */}
-          
+          <Route path="/home" element={isAuth?<HomePage/> :<Login/>}/>
+          <Route path="/profile" element={isAuth? <Profile/>:<Login/>}/>
+        </Routes>          
       </ThemeProvider>
     </>
   );

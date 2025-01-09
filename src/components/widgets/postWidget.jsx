@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import WidgetWrapper from '../widgetwrapper'
 import Friends from './friends'
-import { IconButton, Typography, useTheme } from '@mui/material'
+import { Box, Divider, IconButton, Typography, useTheme } from '@mui/material'
 import {
     ChatBubbleOutlineOutlined,
     FavoriteBorderOutlined,
@@ -9,7 +9,9 @@ import {
     ShareOutlined,
   } from "@mui/icons-material";
 import FlexBetween from '../FlexBetween';
-const PostWidget = ({picturePath,isLiked}) => {
+import SERVER_URL from '../../services/url';
+const PostWidget = ({postId,postUserId,name,description,location,picturePath,userPicturePath,likes,comments,isLiked}) => {
+  
     const [isComments, setIsComments] = useState(false);
     const {palette} = useTheme();
     const main = palette.neutral.main;
@@ -17,17 +19,22 @@ const PostWidget = ({picturePath,isLiked}) => {
     return (
    <>
    <WidgetWrapper m="2rem 0">
-    <Friends/>
+    <Friends 
+     friendId={postUserId}
+     name={name}
+     subtitle={location}
+     userPicturePath={userPicturePath}
+    />
     <Typography color={main} sx={{ mt: "1rem" }}>
-        description
+        {description}
       </Typography>
-      {!picturePath && (
+      {picturePath && (
         <img
           width="100%"
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:3001/assets/${picturePath}`}
+          src={`${SERVER_URL}/Uploads/${picturePath}`}
         />
       )}
        <FlexBetween mt="0.25rem">
@@ -50,7 +57,25 @@ const PostWidget = ({picturePath,isLiked}) => {
             <Typography>56</Typography>
           </FlexBetween>
         </FlexBetween>
+        <IconButton>
+          <ShareOutlined />
+        </IconButton>
         </FlexBetween>
+        {isComments && (
+        <Box mt="0.5rem">
+          {/* {comments.map((comment, i) => ( */}
+            <Box >
+              <Divider />
+              <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
+                comment
+              </Typography>
+            </Box>
+          {/* ) */}
+          {/* ) */}
+          {/* } */}
+          <Divider />
+        </Box>
+      )}
 
    </WidgetWrapper>
    </>

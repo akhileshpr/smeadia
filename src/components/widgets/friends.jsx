@@ -5,15 +5,14 @@ import WidgetWrapper from "../widgetwrapper";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-const Friends = () => {
+const Friends = ({friendId,name,subtitle,userPicturePath}) => {
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
   const friends = useSelector((state) => state.user.friends);
-//   const isFriend = friends.find((friend) => friend._id === friendId);
-  const isFriend=false;
+  const isFriend = friends.find((friend) => friend._id === friendId);
   return (
     <>
         <FlexBetween>
@@ -21,10 +20,10 @@ const Friends = () => {
             <ProfileImage size="55px" />
             <Box>
               <Typography color={main} variant="h5" fontWeight="500">
-                Akhilesh P R
+                {name}
               </Typography>
               <Typography color={medium} fontSize="0.75rem">
-                location
+                {subtitle?subtitle:".........."}
               </Typography>
             </Box>
           </FlexBetween>

@@ -11,6 +11,7 @@ import Friendlist from '../../components/widgets/friendlist';
 import PostsWidget from '../../components/widgets/postsWidget';
 
 const Home = () => {
+  const [data,setData] = useState([]);
   return (
     <>
       <Navbar/>
@@ -20,8 +21,8 @@ const Home = () => {
             <UserWidget />
           </Grid>
           <Grid item xs={12} sm={8} md={6}>
-           <MyPostWidget/>
-           <PostsWidget/>
+           <MyPostWidget setData={setData}/>
+           <PostsWidget data={data}/>
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
             <Friendlist/>

@@ -27,8 +27,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { postDataApi } from "../../services/allApi";
 import { setPosts } from "../../redux";
 
-const MyPostWidget = () => {
-  const [data,setData] = useState();
+const MyPostWidget = ({setData}) => {
+  // const [data,setData] = useState();
   const [image, setImage] = useState(null);
   const [isImage, setIsImage] = useState(false);
   const [post,setPost] = useState("");
@@ -68,7 +68,7 @@ const MyPostWidget = () => {
   const result = await postDataApi(formData,reqHeader);
   if(result.status=== 200){
     setData(result?.data)
-    dispath(setPosts({posts:data}));
+    dispath(setPosts({posts:result?.data}));
     setImage(null);
     setPost("");
    

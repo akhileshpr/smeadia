@@ -16,6 +16,7 @@ import * as yup from "yup";
 import { loginApi, registerAPI } from "../../services/allApi";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux";
+import { useNavigate } from "react-router-dom";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -49,7 +50,7 @@ const Form = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading,setLoading] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -86,6 +87,7 @@ const Form = () => {
             token:result?.data?.token,
           })
         );
+        navigate('/home');
       }
       console.log(result);
     } catch (err) {
