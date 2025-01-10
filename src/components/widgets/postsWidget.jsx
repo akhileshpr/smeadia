@@ -57,6 +57,7 @@ const PostsWidget = ({data}) => {
             userPicturePath={userPicturePath}
             likes={likes}
             comments={comments}
+            getPosts={getPosts}
           />
         )
       )}

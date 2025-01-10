@@ -13,3 +13,9 @@ export const postDataApi=async(post,reqHeader)=>{
 export const getPostsApi=async(reqHeader)=>{
     return await commonAPI("GET",`${SERVER_URL}/getposts`,"",reqHeader);
 }
+export const getUserApi=async(id,reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/getuser/${id}`,"",reqHeader);
+}
+export const updateLikeApi=async(id,post,reqHeader)=>{
+    return await commonAPI("PATCH",`${SERVER_URL}/${id}/like`,post,reqHeader);
+}

@@ -12,13 +12,14 @@ import PostsWidget from '../../components/widgets/postsWidget';
 
 const Home = () => {
   const [data,setData] = useState([]);
+  const { _id, picturePath } = useSelector((state) => state.user);
   return (
     <>
       <Navbar/>
       <FlexBetween>
         <Grid container spacing={1} padding="2rem 6%">
           <Grid item xs={12} sm={4} md={3}>
-            <UserWidget />
+            <UserWidget userId={_id} picturePath={picturePath}/>
           </Grid>
           <Grid item xs={12} sm={8} md={6}>
            <MyPostWidget setData={setData}/>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ManageAccountsOutlined,
   EditOutlined,
@@ -14,7 +14,8 @@ import ProfileImage from "./profileImage";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import WidgetWrapper from "../widgetwrapper";
-const UserWidget = () => {
+import { getUserApi } from "../../services/allApi";
+const UserWidget = ({userId,picturePath}) => {
     const [user, setUser] = useState(null);
     const { palette } = useTheme();
     const navigate = useNavigate();
@@ -22,7 +23,24 @@ const UserWidget = () => {
     const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
+    const getUser=async()=>{
+      try{
+
+        const reqHeader = { Authorization: `Bearer ${token}` };
+        const result = await getUserApi(userId,reqHeader);
+        if (result.status === 200){
+          setUser(result?.data); 
+        }
+      }catch(err){
+        console.log(err); 
+      }
+    }
+    useEffect(()=>{
+      getUser();
+    },[])
+   
   return (
+
     <>
 <WidgetWrapper>
   <FlexBetween pb="0.5rem" gap="0.5rem">
@@ -30,10 +48,10 @@ const UserWidget = () => {
         <ProfileImage/>
         <Box>
           <Typography color={dark}>
-            Fake Person
+            {user?.firstName}  {user?.lastName}
           </Typography>
           <Typography color={dark}>
-            0 friends
+       {user?.friends.length}
           </Typography>
         </Box>
       </FlexBetween>
@@ -45,13 +63,13 @@ const UserWidget = () => {
     <Box display='flex' alignItems='center' gap="1rem" mb="0.5rem">
     <LocationOnOutlined fontSize="large" sx={{color:main}}/>
      <Typography color={medium}>
-      fake location
+      {user?.location ||"................."}
      </Typography>
     </Box>
     <Box display='flex' alignItems='center' gap="1rem">
      <WorkOutlineOutlined fontSize="large" sx={{color:main}}/>
      <Typography color={medium}>
-      fake occupation
+     {user?.occupation ||"................."}
      </Typography>
     </Box>
   </Box>
