@@ -1,15 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import PostWidget from './postWidget'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPostsApi } from '../../services/allApi';
+import { getPostsApi, getUserPostApi } from '../../services/allApi';
 import { setPosts } from '../../redux';
 
-const PostsWidget = ({data}) => {
+const PostsWidget = ({userId,data, isProfile=false}) => {
   const dispatch = useDispatch();
   const posts = useSelector((state)=>state.posts);
   const token = useSelector((state)=>state.token);
-  // console.log(posts);
+
   
+  const getUser = async() =>{
+    const reqHeader = { Authorization: `Bearer ${token}` };
+    try {
+      const result = await getUserPostApi(userId,reqHeader);
+  
+      if (result?.status === 200) {
+        dispatch(setPosts({ posts: result?.data }));
+      } else {
+        console.error("Failed to fetch posts:", result?.status);
+      }
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    }
+
+  }
+
   const getPosts = async () => {
     const reqHeader = { Authorization: `Bearer ${token}` };
     try {
@@ -25,12 +41,12 @@ const PostsWidget = ({data}) => {
     }
   };
     useEffect(() => {
-      if(token){
+      if (isProfile) {
+        getUser();
+      } else {
         getPosts();
       }
-  }, [data]); 
-  
-  
+  }, [data]);   
   return (
     <>
         {posts?.map(

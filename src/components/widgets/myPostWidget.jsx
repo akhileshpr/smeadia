@@ -27,7 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postDataApi } from "../../services/allApi";
 import { setPosts } from "../../redux";
 
-const MyPostWidget = ({setData}) => {
+const MyPostWidget = () => {
   // const [data,setData] = useState();
   const [image, setImage] = useState(null);
   const [isImage, setIsImage] = useState(false);
@@ -40,7 +40,7 @@ const MyPostWidget = ({setData}) => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state)=>state.token);
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   
   const handleDrop = (acceptedFiles) => {
     setImage(acceptedFiles[0]);
@@ -67,8 +67,7 @@ const MyPostWidget = ({setData}) => {
     try{
   const result = await postDataApi(formData,reqHeader);
   if(result.status=== 200){
-    setData(result?.data)
-    dispath(setPosts({posts:result?.data}));
+    dispatch(setPosts({ posts: result?.data }));
     setImage(null);
     setPost("");
    

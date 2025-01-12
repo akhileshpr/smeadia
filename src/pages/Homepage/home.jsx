@@ -9,8 +9,13 @@ import MyPostWidget from '../../components/widgets/myPostWidget';
 import Friends from '../../components/widgets/friends';
 import Friendlist from '../../components/widgets/friendlist';
 import PostsWidget from '../../components/widgets/postsWidget';
+import Editform from '../../components/editform';
+import EditModal from '../../components/widgets/modal';
 
 const Home = () => {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
   const [data,setData] = useState([]);
   const { _id, picturePath } = useSelector((state) => state.user);
   return (
@@ -19,11 +24,12 @@ const Home = () => {
       <FlexBetween>
         <Grid container spacing={1} padding="2rem 6%">
           <Grid item xs={12} sm={4} md={3}>
-            <UserWidget userId={_id} picturePath={picturePath}/>
+            <UserWidget userId={_id} picturePath={picturePath}  open={handleOpen}/>
           </Grid>
           <Grid item xs={12} sm={8} md={6}>
            <MyPostWidget setData={setData}/>
            <PostsWidget data={data}/>
+           <EditModal open={open} close={handleClose}/>
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
             <Friendlist/>

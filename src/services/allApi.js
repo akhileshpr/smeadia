@@ -19,3 +19,9 @@ export const getUserApi=async(id,reqHeader)=>{
 export const updateLikeApi=async(id,post,reqHeader)=>{
     return await commonAPI("PATCH",`${SERVER_URL}/${id}/like`,post,reqHeader);
 }
+export const addRemoveFriends=async(id,friendId,reqHeader)=>{
+    return await commonAPI("PATCH",`${SERVER_URL}/${id}/${friendId}`,"",reqHeader);
+}
+export const getUserPostApi=async(id,reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/user/${id}`,"",reqHeader);
+}

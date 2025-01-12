@@ -12,7 +12,8 @@ import FlexBetween from "../FlexBetween";
 import SERVER_URL from "../../services/url";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLikeApi } from "../../services/allApi";
-import { setPost } from "../../redux";
+import { setPost, setPosts } from "../../redux";
+
 const PostWidget = ({
   postId,
   postUserId,
@@ -25,6 +26,8 @@ const PostWidget = ({
   comments,
   getPosts
 }) => {
+
+  
   const [isComments, setIsComments] = useState(false);
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -37,11 +40,12 @@ const PostWidget = ({
   const postLike = async()=>{
     try{
       const reqHeader = { Authorization: `Bearer ${token}` };
-      const reqBody = {userId:loggedInUserId}
+      const reqBody = {userId:loggedInUserId};
       const result = await updateLikeApi(postId,reqBody,reqHeader);
       if(result?.status === 200){
-        getPosts();
-        dispatch(setPost({ post: result?.data }));
+        // getPosts();
+         dispatch(setPosts({ posts: result?.data }));
+
       }
       
     }catch(err){

@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={isAuth?<HomePage/> :<Login/>}/>
-          <Route path="/profile" element={isAuth? <Profile/>:<Login/>}/>
+          <Route path="/profile/:userId" element={isAuth? <Profile/>:<Login/>}/>
         </Routes>          
       </ThemeProvider>
     </>
