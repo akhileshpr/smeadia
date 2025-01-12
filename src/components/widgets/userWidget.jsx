@@ -14,21 +14,28 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import WidgetWrapper from "../widgetwrapper";
 import { getUserApi } from "../../services/allApi";
-import EditModal from "./modal";
-const UserWidget = ({ userId, picturePath,open }) => {
-  const [user, setUser] = useState(null);
+import Editform from "../editform";
+const UserWidget = ({ userId, picturePath }) => {
+
+
+  
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  // const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
+  const user = useSelector((state)=>state.user);
   const getUser = async () => {
     try {
       const reqHeader = { Authorization: `Bearer ${token}` };
       const result = await getUserApi(userId, reqHeader);
       if (result.status === 200) {
-        setUser(result?.data);
+        // setUser(result?.data);
       }
     } catch (err) {
       console.log(err);
@@ -43,7 +50,7 @@ const UserWidget = ({ userId, picturePath,open }) => {
       <WidgetWrapper>
         <FlexBetween pb="0.5rem" gap="0.5rem">
           <FlexBetween gap="1rem">
-            <ProfileImage />
+            <ProfileImage picturePath={picturePath}/>
             <Box>
               <Typography color={dark}>
                 {user?.firstName} {user?.lastName}
@@ -59,13 +66,13 @@ const UserWidget = ({ userId, picturePath,open }) => {
           <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
             <LocationOnOutlined fontSize="large" sx={{ color: main }} />
             <Typography color={medium}>
-              {user?.location || "................."}
+              {user?.location}
             </Typography>
           </Box>
           <Box display="flex" alignItems="center" gap="1rem">
             <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
             <Typography color={medium}>
-              {user?.occupation || "................."}
+              {user?.occupation}
             </Typography>
           </Box>
         </Box>
@@ -114,12 +121,12 @@ const UserWidget = ({ userId, picturePath,open }) => {
           </FlexBetween>
           <Box display="flex" justifyContent="center" p="3">
             {" "}
-            <Button onClick={open} fullWidth variant="outlined" color={medium}>
+            <Button onClick={handleOpen} fullWidth variant="outlined" color={medium}>
               Edit
             </Button>
           </Box>
         </Box>
-        <EditModal/>
+        <Editform open={open} close={handleClose} user={user}/>
       </WidgetWrapper>
     </>
   );

@@ -25,3 +25,6 @@ export const addRemoveFriends=async(id,friendId,reqHeader)=>{
 export const getUserPostApi=async(id,reqHeader)=>{
     return await commonAPI("GET",`${SERVER_URL}/user/${id}`,"",reqHeader);
 }
+export const updateUserApi=async(id,data,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVER_URL}/updateduser/${id}`,data,reqHeader);
+}

@@ -38,7 +38,7 @@ const MyPostWidget = () => {
   const medium = palette.neutral.medium;
   const isMobile = useMediaQuery("(max-width:600px)");
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-  const { _id } = useSelector((state) => state.user);
+  const { _id,picture } = useSelector((state) => state.user);
   const token = useSelector((state)=>state.token);
   const dispatch = useDispatch();
   
@@ -82,7 +82,7 @@ const MyPostWidget = () => {
   return (
     <WidgetWrapper>
       <FlexBetween gap="1.5rem">
-        <ProfileImage />
+        <ProfileImage picturePath={picture}/>
         <InputBase
           placeholder="What's on your mind..."
           onChange={(e)=>setPost(e.target.value)}

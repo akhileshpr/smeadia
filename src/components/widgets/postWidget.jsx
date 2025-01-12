@@ -26,7 +26,6 @@ const PostWidget = ({
   comments,
   getPosts
 }) => {
-
   
   const [isComments, setIsComments] = useState(false);
   const { palette } = useTheme();
