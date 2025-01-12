@@ -17,7 +17,7 @@ export const getUserApi=async(id,reqHeader)=>{
     return await commonAPI("GET",`${SERVER_URL}/getuser/${id}`,"",reqHeader);
 }
 export const updateLikeApi=async(id,post,reqHeader)=>{
-    return await commonAPI("PATCH",`${SERVER_URL}/${id}/like`,post,reqHeader);
+    return await commonAPI("PATCH",`${SERVER_URL}/${id}`,post,reqHeader);
 }
 export const addRemoveFriends=async(id,friendId,reqHeader)=>{
     return await commonAPI("PATCH",`${SERVER_URL}/${id}/${friendId}`,"",reqHeader);
@@ -27,4 +27,7 @@ export const getUserPostApi=async(id,reqHeader)=>{
 }
 export const updateUserApi=async(id,data,reqHeader)=>{
     return await commonAPI("PUT",`${SERVER_URL}/updateduser/${id}`,data,reqHeader);
+}
+export const getUserFriends=async(id,reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/getuserfriend/${id}`,"",reqHeader);
 }

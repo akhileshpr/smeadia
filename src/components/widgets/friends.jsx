@@ -9,6 +9,7 @@ import { addRemoveFriends } from "../../services/allApi";
 import { setFriends } from "../../redux";
 import { useNavigate } from "react-router-dom";
 const Friends = ({ friendId, name, subtitle, userPicturePath }) => {
+
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
@@ -20,8 +21,7 @@ const Friends = ({ friendId, name, subtitle, userPicturePath }) => {
   const friends = useSelector((state) => state.user.friends);
   const isFriend = friends.find((friend) => friend._id === friendId);
   const sameUser = _id !== friendId
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate();  
   const patchFriend = async()=>{
     try{
       const reqHeader = { Authorization: `Bearer ${token}` };

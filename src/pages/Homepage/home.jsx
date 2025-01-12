@@ -30,7 +30,7 @@ const Home = () => {
            {/* <Editform open={open} close={handleClose}/> */}
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
-            <Friendlist/>
+            <Friendlist userId={_id}/>
           </Grid>
         </Grid>
       </FlexBetween>
